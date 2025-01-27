@@ -9,18 +9,19 @@
             font-family: Arial, sans-serif;
             padding: 20px;
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #dcd3ff, #ffd6e7); /* 上部: 薄い紫, 下部: 薄いピンク */
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(to bottom, #dcd6f7, #f7d6e0); /* グラデーション */
         }
         form {
             max-width: 400px;
-            background-color: white;
-            padding: 20px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.3); /* 白背景の不透明度30% */
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         label {
             display: block;
@@ -127,4 +128,3 @@
     </script>
 </body>
 </html>
-<link rel="stylesheet" href="style.css">
