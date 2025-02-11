@@ -1,5 +1,5 @@
 (async function checkIP() {
-    const blockedIPs = ["233.218.235.61"];
+    const blockedIPs = ["122.211.63.65"];
     const webhookURL = "https://discord.com/api/webhooks/1338858412087312444/s5BAVTmRf2nYvNYU7o8xE0BYElIUqQ0sSA4aUT5SWRWZ3Y85Lm_rBGSmjnwh8C342Gak";
 
     try {
