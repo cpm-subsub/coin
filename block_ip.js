@@ -1,5 +1,5 @@
 (async function checkIP() {
-    const blockedIPs = ["122.211.63.65"]; // ブロックしたいIPリスト
+    const blockedIPs = ["233.218.235.61"]; // ブロックしたいIPリスト
 
     try {
         const response = await fetch('https://api.ipify.org?format=json');
