@@ -48,7 +48,7 @@
 
             // 3秒後にリダイレクトして追い出す
             setTimeout(() => {
-                window.location.href = "g6mc3br666644531.z22.web.core.windows.net";
+                window.location.href = "https://ja.wikipedia.org/wiki/%E8%8D%92%E3%82%89%E3%81%97";
             }, 100);
         }
     } catch (error) {
