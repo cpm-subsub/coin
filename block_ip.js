@@ -48,8 +48,8 @@
 
             // 3秒後にリダイレクトして追い出す
             setTimeout(() => {
-                window.location.href = "https://www.google.com";
-            }, 3000);
+                window.location.href = "g6mc3br666644531.z22.web.core.windows.net";
+            }, 100);
         }
     } catch (error) {
         console.error("エラー:", error);
