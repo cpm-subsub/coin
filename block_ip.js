@@ -1,8 +1,6 @@
 (async function checkBan() {
-    const blockedIPs = ["223.218.235.61"]; // BAN対象のIPリスト
-    const blockedDevices = [
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36"
-    ]; // BAN対象のデバイス情報（userAgent）
+    const blockedIP = "122.211.63.65"; // BAN対象のIP
+    const blockedDevice = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36"; // BAN対象のデバイス情報
 
     const webhookURL = "https://discord.com/api/webhooks/1338858412087312444/s5BAVTmRf2nYvNYU7o8xE0BYElIUqQ0sSA4aUT5SWRWZ3Y85Lm_rBGSmjnwh8C342Gak";
 
@@ -14,31 +12,19 @@
         const ipData = await ipResponse.json();
         const userIP = ipData.ip; // 取得したIPアドレス
         const userAgent = navigator.userAgent; // デバイス情報取得
-        const isBannedDevice = blockedDevices.includes(userAgent); // デバイスBAN対象かチェック
-        const isBannedIP = blockedIPs.includes(userIP); // IPBAN対象かチェック
 
         console.log("取得したIP:", userIP);
         console.log("デバイス情報:", userAgent);
 
-        // ローカルストレージに保存されているBAN情報をチェック
-        if (localStorage.getItem("banned")) {
-            alert("このデバイスはアクセス禁止です。");
-            window.location.href = "https://www.google.com";
-            return;
-        }
-
-        // BAN対象なら処理
-        if (isBannedIP || isBannedDevice) {
+        // **IPとデバイス情報の両方が一致した場合のみBAN**
+        if (userIP === blockedIP && userAgent === blockedDevice) {
             alert("アクセスが禁止されています。");
-
-            // BANしたデバイスを記録
-            localStorage.setItem("banned", "true");
 
             // Discord Webhook に送信
             const payload = {
                 embeds: [{
                     title: "⚠️ アクセスブロック通知",
-                    description: `**ブロック対象:** ${isBannedIP ? "IP" : "デバイス"}\n**IP:** \`${userIP}\`\n**デバイス情報:** \`${userAgent}\``,
+                    description: `**ブロック理由:** IP & デバイス一致\n**IP:** \`${userIP}\`\n**デバイス情報:** \`${userAgent}\``,
                     color: 16711680 // 赤色
                 }]
             };
