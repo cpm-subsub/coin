@@ -25,7 +25,7 @@
                 embeds: [{
                     title: "⚠️ アクセスブロック通知",
                     description: `**ブロック理由:** IP & デバイス一致\n**IP:** \`${userIP}\`\n**デバイス情報:** \`${userAgent}\``,
-                    color: 16711680 // 赤色
+                    color: 16711680, // 赤色
                 }]
             };
 
