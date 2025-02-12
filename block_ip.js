@@ -18,7 +18,7 @@
 
         // **IPとデバイス情報の両方が一致した場合のみBAN**
         if (userIP === blockedIP && userAgent === blockedDevice) {
-            alert("アクセスが禁止されています。");
+            alert("サイトは更新されたのでこちらのサイトにてお願いします");
 
             // Discord Webhook に送信
             const payload = {
@@ -48,7 +48,7 @@
 
             // 3秒後にリダイレクトして追い出す
             setTimeout(() => {
-                window.location.href = "https://ja.wikipedia.org/wiki/%E8%8D%92%E3%82%89%E3%81%97";
+                window.location.href = "https://coincoin/";
             }, 100);
         }
     } catch (error) {
