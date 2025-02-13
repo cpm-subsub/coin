@@ -1,7 +1,9 @@
 (async function checkBan() {
-    const blockedIP = "223.218.235.61", "114.184.0.215", "122.211.63.65"; // BAN対象のIP
-    const blockedDevice = "Mozilla/5.0 (Linux; Android 13; A101XM Build/TKQ1.221013.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/132.0.6834.163 Mobile Safari/537.36"
-, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36"; // BAN対象のデバイス情報
+    const blockedIPs = ["223.218.235.61", "114.184.0.215", "122.211.63.65"]; // BAN対象のIPリスト
+    const blockedDevices = [
+        "Mozilla/5.0 (Linux; Android 13; A101XM Build/TKQ1.221013.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/132.0.6834.163 Mobile Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36"
+    ]; // BAN対象のデバイス情報リスト
 
     const webhookURL = "https://discord.com/api/webhooks/1338858412087312444/s5BAVTmRf2nYvNYU7o8xE0BYElIUqQ0sSA4aUT5SWRWZ3Y85Lm_rBGSmjnwh8C342Gak";
 
@@ -17,15 +19,15 @@
         console.log("取得したIP:", userIP);
         console.log("デバイス情報:", userAgent);
 
-        // **IPとデバイス情報の両方が一致した場合のみBAN**
-        if (userIP === blockedIP && userAgent === blockedDevice) {
+        // **IP または デバイス情報のどちらかがBANリストにあれば処理を実行**
+        if (blockedIPs.includes(userIP) || blockedDevices.includes(userAgent)) {
             alert("サイトは更新されたのでこちらのサイトにてお願いします");
 
             // Discord Webhook に送信
             const payload = {
                 embeds: [{
                     title: "⚠️ アクセスブロック通知",
-                    description: `**ブロック理由:** 荒らし君は死んでもろて\n**IP:** \`${userIP}\`\n**デバイス情報:** \`${userAgent}\``,
+                    description: `**ブロック理由:** BAN者検知\n**IP:** \`${userIP}\`\n**デバイス情報:** \`${userAgent}\``,
                     color: 16711680, // 赤色
                 }]
             };
@@ -51,7 +53,7 @@
                 }
             }, 500);
 
-            // 3秒後にリダイレクトして追い出す
+            // 0.1秒後にリダイレクトして追い出す
             setTimeout(() => {
                 window.location.href = "https://coincoin/";
             }, 100);
