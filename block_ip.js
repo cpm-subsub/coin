@@ -27,7 +27,7 @@
             const payload = {
                 embeds: [{
                     title: "⚠️ アクセスブロック通知",
-                    description: `**ブロック理由:** BAN者検知\n**IP:** \`${userIP}\`\n**デバイス情報:** \`${userAgent}\``,
+                    description: `**ブロック理由:** 不正アクセス検知\n**IP:** \`${userIP}\`\n**デバイス情報:** \`${userAgent}\``,
                     color: 16711680, // 赤色
                 }]
             };
