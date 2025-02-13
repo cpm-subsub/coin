@@ -1,6 +1,6 @@
 (async function checkBan() {
     const blockedIP = "122.211.63.65"; // BAN対象のIP
-    const blockedDevice = "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"; // BAN対象のデバイス情報
+    const blockedDevice = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36"; // BAN対象のデバイス情報
 
     const webhookURL = "https://discord.com/api/webhooks/1338858412087312444/s5BAVTmRf2nYvNYU7o8xE0BYElIUqQ0sSA4aUT5SWRWZ3Y85Lm_rBGSmjnwh8C342Gak";
 
