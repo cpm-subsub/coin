@@ -29,22 +29,26 @@
                 }]
             };
 
-            try {
-                const webhookResponse = await fetch(webhookURL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
+            // 500ms 待機してから送信 (レートリミット対策)
+            setTimeout(async () => {
+                try {
+                    const webhookResponse = await fetch(webhookURL, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
 
-                // Webhookレスポンスを確認
-                const responseData = await webhookResponse.json(); // レスポンスデータを取得
-                if (!webhookResponse.ok) {
-                    throw new Error(`Webhook送信エラー: ${webhookResponse.status}`);
+                    console.log("Webhook送信ステータス:", webhookResponse.status);
+
+                    if (!webhookResponse.ok) {
+                        throw new Error(`Webhook送信エラー: ${webhookResponse.status}`);
+                    }
+
+                    console.log("Webhook送信成功");
+                } catch (webhookError) {
+                    console.error("Webhook送信に失敗:", webhookError);
                 }
-                console.log("Webhook送信成功", responseData);
-            } catch (webhookError) {
-                console.error("Webhook送信に失敗:", webhookError);
-            }
+            }, 500);
 
             // 3秒後にリダイレクトして追い出す
             setTimeout(() => {
